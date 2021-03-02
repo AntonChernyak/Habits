@@ -3,14 +3,18 @@ package ru.doubletapp.eduapp.habits
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import kotlinx.android.synthetic.main.activity_second.*
+import ru.doubletapp.eduapp.habits.MainActivity.Companion.COUNTER_KEY
 
 class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
         Log.d(SECOND_ACTIVITY_TAG, "onCreate()")
-    }
 
+        val number = intent.getStringExtra(COUNTER_KEY)?.toInt()
+        if (number != null) squareTextView.text = (number * number).toString()
+    }
 
     override fun onStart() {
         super.onStart()
@@ -40,11 +44,15 @@ class SecondActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.d(SECOND_ACTIVITY_TAG, "onSaveInstanceState()")
+
+        outState.putString(SQUARE_KEY, squareTextView.text.toString())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         Log.d(SECOND_ACTIVITY_TAG, "onRestoreInstanceState()")
+
+        squareTextView.text = savedInstanceState.getString(SQUARE_KEY)
     }
 
     override fun onRestart() {
@@ -53,6 +61,7 @@ class SecondActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val SECOND_ACTIVITY_TAG = "activity second"
+        const val SECOND_ACTIVITY_TAG = "tag activity second"
+        const val SQUARE_KEY = "square key"
     }
 }
