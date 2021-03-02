@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Habits</string>
+    <string name="intent_button_text">Не дави на меня</string>
 </resources>
