@@ -17,6 +17,7 @@ class HabitsListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_habits_list)
+        setSupportActionBar(binding.habitsListToolbar)
         showData()
     }
 
@@ -39,7 +40,8 @@ class HabitsListActivity : AppCompatActivity() {
             { checkView ->
                 checkView.isSelected = !checkView.isSelected
             }, {
-
+                val intent = Intent(this, HabitCreatorActivity::class.java)
+                startActivity(intent)
             }
         )
         binding.habitsRecyclerView.adapter = adapter

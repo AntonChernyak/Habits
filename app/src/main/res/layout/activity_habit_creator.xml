@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     android:paddingStart="@dimen/spacing_compact_24"
     android:paddingTop="@dimen/spacing_medium_16"
     android:paddingEnd="@dimen/spacing_compact_24">
