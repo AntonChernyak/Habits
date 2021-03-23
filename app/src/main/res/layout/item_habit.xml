@@ -63,9 +63,10 @@
             android:layout_width="@dimen/checkImageViewSize"
             android:layout_height="@dimen/checkImageViewSize"
             android:layout_marginEnd="@dimen/spacing_medium_16"
-            android:background="@drawable/check_image_view_not_selected_background"
+            android:background="@drawable/check_image_view_background_selector"
             android:contentDescription="@string/check_habit"
-            android:src="@drawable/ic_check_24"
+            app:srcCompat="@drawable/ic_check_24"
+            android:padding="@dimen/spacing_very_tiny_2"
             app:layout_constraintBottom_toBottomOf="@+id/priorityTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/habitNameTextView" />

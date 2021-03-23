@@ -3,4 +3,16 @@
     <string name="intent_button_text">Не дави на меня</string>
     <string name="add_habit">Добавить привычку</string>
     <string name="check_habit">Выбрать привычку</string>
+    <string name="hint_name">Название</string>
+    <string name="habit_description">Описание</string>
+    <string name="habit_type">Тип привычки</string>
+    <string name="habit_priority">Приоритет</string>
+    <string name="good_habit">Хорошая привычка</string>
+    <string name="bad_habit">Плохая привычка</string>
+    <string name="habit_period">Периодичность</string>
+    <string name="repeat">Повторять</string>
+    <string name="times">раз</string>
+    <string name="days">дней</string>
+    <string name="choose_color">Выбрать цвет</string>
+    <string name="create">Создать</string>
 </resources>
