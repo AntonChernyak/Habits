@@ -12,8 +12,8 @@
         android:theme="@style/Theme.Habits"
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="AllowBackup">
-        <activity android:name=".HabitCreatorActivity" />
-        <activity android:name=".HabitsListActivity">
+        <activity android:name=".ui.activity.HabitCreatorActivity" />
+        <activity android:name=".ui.activity.HabitsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

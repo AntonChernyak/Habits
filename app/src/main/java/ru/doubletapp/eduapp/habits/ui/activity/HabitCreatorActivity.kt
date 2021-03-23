@@ -1,4 +1,4 @@
-package ru.doubletapp.eduapp.habits
+package ru.doubletapp.eduapp.habits.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
