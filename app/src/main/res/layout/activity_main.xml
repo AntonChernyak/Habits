@@ -3,23 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_medium"
+    android:padding="@dimen/spacing_medium"
     tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/counterTextView"
-        style="@style/TextAppearance.AppCompat.Headline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:text="@tools:sample/first_names" />
-
-    <Button
-        android:id="@+id/intentButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:onClick="openSecondActivityOnClick"
-        android:text="@string/intent_button_text" />
 
 </FrameLayout>
