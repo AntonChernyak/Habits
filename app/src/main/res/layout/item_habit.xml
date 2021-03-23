@@ -54,6 +54,7 @@
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny_4"
             app:layout_constraintEnd_toEndOf="@id/habitTitleTextView"
             app:layout_constraintStart_toEndOf="@id/habitColorLabel"
             app:layout_constraintStart_toStartOf="@id/habitTitleTextView"
