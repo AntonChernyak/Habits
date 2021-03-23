@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Habits</string>
     <string name="intent_button_text">Не дави на меня</string>
+    <string name="add_habit">Добавить привычку</string>
+    <string name="check_habit">Выбрать привычку</string>
 </resources>
