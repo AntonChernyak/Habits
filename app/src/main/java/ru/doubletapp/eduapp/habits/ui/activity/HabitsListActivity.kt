@@ -3,7 +3,6 @@ package ru.doubletapp.eduapp.habits.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,12 +78,5 @@ class HabitsListActivity : AppCompatActivity() {
         const val ADD_BUTTON_VISIBILITY_MARK = 4
         const val HABIT_EXTRA_KEY = "habit_extra_key"
         const val POSITION_KEY = "position_key"
-/*        const val DESCRIPTION_KEY = "description_key"
-        const val PERIOD_COUNT_KEY = "period_count_key"
-        const val PERIOD_DAYS_KEY = "period_days_key"
-        const val TYPE_KEY = "type_key"
-        const val PRIORITY_KEY = "priority_key"
-        const val COLOR_KEY = "color_key"
-        const val POSITION_KEY = "position_key"*/
     }
 }

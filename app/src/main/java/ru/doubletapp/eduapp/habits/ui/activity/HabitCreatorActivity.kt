@@ -1,11 +1,13 @@
 package ru.doubletapp.eduapp.habits.ui.activity
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -16,7 +18,6 @@ import ru.doubletapp.eduapp.habits.data.repository.MockRepository
 import ru.doubletapp.eduapp.habits.databinding.ActivityHabitCreatorBinding
 import ru.doubletapp.eduapp.habits.extension.hideKeyboard
 import ru.doubletapp.eduapp.habits.ui.activity.HabitsListActivity.Companion.HABIT_EXTRA_KEY
-import ru.doubletapp.eduapp.habits.ui.activity.HabitsListActivity.Companion.POSITION_KEY
 
 class HabitCreatorActivity : AppCompatActivity() {
 
@@ -31,10 +32,25 @@ class HabitCreatorActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.apply {
+            putString(TITLE_KEY, binding.habitTitleEditText.text.toString())
+            putString(DESCRIPTION_KEY, binding.habitDescriptionEditText.text.toString())
+            putString(PRIORITY_KEY, binding.prioritySpinner.selectedItem.toString())
+            putString(PERIOD_COUNT_KEY, binding.periodTimesEditText.text.toString())
+            putString(PERIOD_DAYS_KEY, binding.periodDaysEditText.text.toString())
+            putParcelable(TYPE_KEY, getHabitType())
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+        binding.habitTitleEditText.setText(savedInstanceState.getString(TITLE_KEY))
+        binding.habitDescriptionEditText.setText(savedInstanceState.getString(DESCRIPTION_KEY))
+        binding.periodDaysEditText.setText(savedInstanceState.getString(PERIOD_DAYS_KEY))
+        binding.periodTimesEditText.setText(savedInstanceState.getString(PERIOD_COUNT_KEY))
+        savedInstanceState.getString(PRIORITY_KEY)?.toInt()
+            ?.minus(1)?.let { binding.prioritySpinner.setSelection(it) }
+        savedInstanceState.getParcelable<HabitTypeEnum>(TYPE_KEY)?.let { setHabitType(it) }
     }
 
     fun createHabitButtonClick(view: View) {
@@ -165,5 +181,13 @@ class HabitCreatorActivity : AppCompatActivity() {
 
     companion object {
         const val DEFAULT_POSITION = -1
+        const val TITLE_KEY = "title_key"
+        const val DESCRIPTION_KEY = "description_key"
+        const val PERIOD_COUNT_KEY = "period_count_key"
+        const val PERIOD_DAYS_KEY = "period_days_key"
+        const val TYPE_KEY = "type_key"
+        const val PRIORITY_KEY = "priority_key"
+        const val COLOR_KEY = "color_key"
+        const val POSITION_KEY = "position_key"
     }
 }
