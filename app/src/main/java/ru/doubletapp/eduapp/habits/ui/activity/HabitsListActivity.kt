@@ -30,6 +30,11 @@ class HabitsListActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.habitsRecyclerView.adapter?.notifyDataSetChanged()
+    }
+
     fun addHabitButtonClick(view: View) {
         val intent = Intent(this, HabitCreatorActivity::class.java)
         startActivity(intent)
@@ -44,8 +49,8 @@ class HabitsListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         )
+        adapter.habitsList = MockRepository.list
         binding.habitsRecyclerView.adapter = adapter
-        adapter.habitsList = MockRepository.getHabits()
     }
 
     companion object {
