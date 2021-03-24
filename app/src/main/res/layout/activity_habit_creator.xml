@@ -243,12 +243,36 @@
                 android:id="@+id/selectedColorView"
                 android:layout_width="@dimen/item_color_picker_size"
                 android:layout_height="@dimen/item_color_picker_size"
-                android:layout_marginTop="@dimen/spacing_compact_24"
+                android:layout_marginTop="@dimen/spacing_large_32"
                 android:layout_marginEnd="@dimen/spacing_tiny_4"
                 android:background="@drawable/selected_color_background"
                 android:clickable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <TextView
+                android:id="@+id/rgbTextView"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/hsvTextView"
+                app:layout_constraintEnd_toStartOf="@+id/selectedColorView"
+                app:layout_constraintTop_toTopOf="@+id/selectedColorView"
+                tools:text="R:214 | G:138 | B:86" />
+
+            <TextView
+                android:id="@+id/hsvTextView"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/selectedColorView"
+                app:layout_constraintEnd_toStartOf="@+id/selectedColorView"
+                app:layout_constraintTop_toBottomOf="@+id/rgbTextView"
+                tools:text="H:24 | S:58 | V:84" />
 
             <include
                 android:id="@+id/colorScrollView"
@@ -256,7 +280,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_tiny_4"
-                android:layout_marginTop="@dimen/spacing_compact_24"
+                android:layout_marginTop="@dimen/spacing_large_32"
                 android:layout_marginEnd="@dimen/spacing_tiny_4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
