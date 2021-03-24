@@ -1,11 +1,9 @@
 package ru.doubletapp.eduapp.habits.ui.activity
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,6 +16,7 @@ import ru.doubletapp.eduapp.habits.data.repository.MockRepository
 import ru.doubletapp.eduapp.habits.databinding.ActivityHabitCreatorBinding
 import ru.doubletapp.eduapp.habits.extension.hideKeyboard
 import ru.doubletapp.eduapp.habits.ui.activity.HabitsListActivity.Companion.HABIT_EXTRA_KEY
+import ru.doubletapp.eduapp.habits.ui.colorpicker.ColorPickerBackgroundCreator
 
 class HabitCreatorActivity : AppCompatActivity() {
 
@@ -28,6 +27,8 @@ class HabitCreatorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_habit_creator)
         createHabitPrioritySpinner()
         setDataFromIntent()
+        binding.colorScrollView.colorPickerContainer.background =
+            ColorPickerBackgroundCreator.getColorBackgroundDrawable(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

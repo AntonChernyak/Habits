@@ -7,17 +7,23 @@
     <dimen name="spacing_tiny_4">4dp</dimen>
     <dimen name="spacing_very_tiny_2">2dp</dimen>
 
+
     <!-- item habit card view -->
     <dimen name="checkImageViewSize">25dp</dimen>
     <dimen name="habit_card_elevation">8dp</dimen>
+
 
     <!-- habit creator screen -->
     <dimen name="habit_card_corner_radius">10dp</dimen>
     <dimen name="card_color_label_width">10dp</dimen>
     <dimen name="divider_height">1.5dp</dimen>
     <dimen name="period_edit_text_width">50dp</dimen>
+    <dimen name="create_habit_button_width">250dp</dimen>
+    <dimen name="create_habit_button_height">60dp</dimen>
+
     <dimen name="selectedColorViewSize">35dp</dimen>
-    <dimen name="create_habit_button_width">190dp</dimen>
-    <dimen name="create_habit_button_height">45dp</dimen>
+    <dimen name="item_color_picker_size">48dp</dimen>
+    <dimen name="color_picker_item_space_size">32dp</dimen>
+    <dimen name="item_color_corner_radius">10dp</dimen>
 
 </resources>
