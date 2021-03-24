@@ -1,6 +1,5 @@
 package ru.doubletapp.eduapp.habits.ui.adapter
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import ru.doubletapp.eduapp.habits.R
@@ -13,15 +12,13 @@ class HabitViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
     private val binding = ItemHabitBinding.bind(itemView)
 
     fun bind(habit: Habit, click: (View) -> Unit) {
-        Log.d("TAGGG", "VH = ${habit.description}")
-
         binding.habitTitleTextView.text = habit.title
         binding.habitColorLabel.setBackgroundColor(habit.color)
         binding.periodTextView.text = createPeriodString(habit)
-        binding.priorityTextView.text = habit.priority.toString()
+        binding.priorityTextView.text = habit.priority
         binding.typeTextView.text = convertTypeToString(habit.type)
 
-        if (!habit.description.isNullOrEmpty()) {
+        if (habit.description.isNotEmpty()) {
             binding.habitDescriptionTextView.text = habit.description
         } else binding.habitDescriptionTextView.visibility = View.GONE
 

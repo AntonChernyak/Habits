@@ -17,7 +17,7 @@ object MockRepository {
         val initialList = mutableListOf<Habit>()
         Habit(
             title = "Погладить кота",
-            priority = 4,
+            priority = "4",
             periodCount = "3",
             periodDays = "1",
             color = Color.RED
@@ -26,7 +26,7 @@ object MockRepository {
        Habit(
             title = "Покормить кота",
             description = "Лучше кормить кота, а то он будет злиться. А до этого лучше не доводить, ибо страшен кот в гневе!",
-            priority = 5,
+            priority = "5",
             periodCount = "4",
             periodDays = "1",
             color = Color.MAGENTA
@@ -34,7 +34,7 @@ object MockRepository {
 
         Habit(
             title = "Погладить кота",
-            priority = 4,
+            priority = "4",
             periodCount = "3",
             periodDays = "1"
         ).apply { initialList.add(this) }
@@ -42,7 +42,7 @@ object MockRepository {
         Habit(
             title = "Покормить кота",
             description = "Лучше кормить кота, а то он будет злиться. А до этого лучше не доводить, ибо страшен кот в гневе!",
-            priority = 5,
+            priority = "5",
             periodCount = "4",
             periodDays = "1",
             color = Color.parseColor("#283593")
@@ -50,7 +50,7 @@ object MockRepository {
 
         Habit(
             title = "Погладить кота",
-            priority = 4,
+            priority = "4",
             periodCount = "3",
             periodDays = "1",
             color = Color.RED
@@ -59,7 +59,7 @@ object MockRepository {
         Habit(
             title = "Покормить кота",
             description = "Лучше кормить кота, а то он будет злиться. А до этого лучше не доводить, ибо страшен кот в гневе!",
-            priority = 5,
+            priority = "5",
             periodCount = "4",
             periodDays = "1",
             color = Color.MAGENTA
@@ -67,7 +67,7 @@ object MockRepository {
 
         Habit(
             title = "Погладить кота",
-            priority = 4,
+            priority = "4",
             periodCount = "3",
             periodDays = "1",
             color = Color.RED
@@ -76,7 +76,7 @@ object MockRepository {
         Habit(
             title = "Покормить кота Покормить кота Покормить кота Покормить кота Покормить кота",
             description = "Лучше кормить кота, а то он будет злиться. А до этого лучше не доводить, ибо страшен кот в гневе!",
-            priority = 5,
+            priority = "5",
             periodCount = "4",
             periodDays = "1",
             color = Color.MAGENTA
@@ -84,7 +84,7 @@ object MockRepository {
 
         Habit(
             title = "Погладить кота",
-            priority = 4,
+            priority = "4",
             periodCount = "3",
             periodDays = "1",
             color = Color.RED
@@ -96,7 +96,7 @@ object MockRepository {
                     " ибо страшен кот в гневе! Лучше кормить кота, а то он будет злиться. А до этого " +
                     "лучше не доводить, ибо страшен кот в гневе! Ещё текст выаоы щыо аыоаш щыоао ыщаоыщ оаыщвоа " +
                     "ыоашщ ыоашщоы щаоыв оаышо аышваошв ыоащ оащыо ащывоа щоыща ывщ",
-            priority = 5,
+            priority = "5",
             periodCount = "4",
             periodDays = "1",
             color = Color.MAGENTA
@@ -104,7 +104,7 @@ object MockRepository {
 
         Habit(
             title = "Погладить кота",
-            priority = 4,
+            priority = "4",
             periodCount = "3",
             periodDays = "1",
             color = Color.RED
@@ -113,7 +113,7 @@ object MockRepository {
         Habit(
             title = "Покормить кота",
             description = "Лучше кормить кота, а то он будет злиться. А до этого лучше не доводить, ибо страшен кот в гневе!",
-            priority = 5,
+            priority = "5",
             periodCount = "4",
             periodDays = "1",
             type = HabitTypeEnum.BAD_HABIT,

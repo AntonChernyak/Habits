@@ -30,11 +30,11 @@
             android:id="@+id/habitDescriptionEditText"
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="0dp"
-            android:maxLines="5"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/primary_color_green"
             android:hint="@string/habit_description"
             android:inputType="textMultiLine"
+            android:maxLines="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/habitNameEditText" />
@@ -60,10 +60,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view5" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/prioritySpinner"
+            style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:entries="@array/prioritySpinnerDataArray"
             app:layout_constraintBottom_toBottomOf="@+id/priorityLabelTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/priorityLabelTextView" />
@@ -245,8 +247,8 @@
             android:layout_width="@dimen/create_habit_button_width"
             android:layout_height="@dimen/create_habit_button_height"
             android:layout_marginTop="@dimen/spacing_compact_24"
-            android:onClick="createHabitButtonClick"
             android:background="@drawable/create_button_background"
+            android:onClick="createHabitButtonClick"
             android:text="@string/create"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
