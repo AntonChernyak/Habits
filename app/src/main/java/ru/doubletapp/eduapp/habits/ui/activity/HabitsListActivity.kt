@@ -31,15 +31,6 @@ class HabitsListActivity : AppCompatActivity() {
         createAddButtonVisibilityMode()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-    }
-
     override fun onResume() {
         super.onResume()
         binding.habitsRecyclerView.adapter?.notifyDataSetChanged()

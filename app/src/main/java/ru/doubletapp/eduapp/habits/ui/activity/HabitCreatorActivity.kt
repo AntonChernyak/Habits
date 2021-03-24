@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import ru.doubletapp.eduapp.habits.R
 import ru.doubletapp.eduapp.habits.data.model.Habit
 import ru.doubletapp.eduapp.habits.data.model.HabitTypeEnum
@@ -32,6 +34,12 @@ class HabitCreatorActivity : AppCompatActivity() {
 
     fun createHabitButtonClick(view: View) {
         MockRepository.addHabit(createHabit())
+        Snackbar.make(view, getString(R.string.habit_added), Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.cancel)) {
+                MockRepository.list.removeLast()
+            }
+            .setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color))
+            .show()
     }
 
     private fun createHabit(): Habit {

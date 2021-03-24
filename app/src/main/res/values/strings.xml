@@ -16,6 +16,8 @@
     <string name="create">Создать</string>
     <string name="period_string">%1$s раз в %2$s дней</string>
     <string name="my_habits">Мои привычки</string>
+    <string name="habit_added">Привычка добавлена</string>
+    <string name="cancel">Отменить</string>
 
     <!-- priority spinner data -->
     <string-array name="prioritySpinnerDataArray">
