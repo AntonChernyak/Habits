@@ -3,6 +3,7 @@ package ru.doubletapp.eduapp.habits.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import ru.doubletapp.eduapp.habits.ui.adapter.HabitAdapter
 class HabitsListActivity : AppCompatActivity() {
 
     private val binding: ActivityHabitsListBinding by viewBinding()
-    private val habitItems: MutableList<Habit> by lazy {
+    private val habitItems: List<Habit> by lazy {
         MockRepository.list
     }
     private val linearLayoutManager: LinearLayoutManager by lazy {
@@ -27,13 +28,12 @@ class HabitsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_habits_list)
         setSupportActionBar(binding.habitsListToolbar)
-        showData()
         createAddButtonVisibilityMode()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.habitsRecyclerView.adapter?.notifyDataSetChanged()
+        showData()
     }
 
     fun addHabitButtonClick(view: View) {
@@ -46,9 +46,8 @@ class HabitsListActivity : AppCompatActivity() {
         val adapter = HabitAdapter(
             { checkView ->
                 checkView.isSelected = !checkView.isSelected
-            }, {
-                val intent = Intent(this, HabitCreatorActivity::class.java)
-                startActivity(intent)
+            }, { _, position ->
+               openHabitForEditing(position)
             }
         )
 
@@ -68,7 +67,24 @@ class HabitsListActivity : AppCompatActivity() {
         )
     }
 
+    private fun openHabitForEditing(position: Int) {
+        val intent = Intent(this, HabitCreatorActivity::class.java).apply {
+            putExtra(HABIT_EXTRA_KEY, habitItems[position])
+            putExtra(POSITION_KEY, position)
+        }
+        startActivity(intent)
+    }
+
     companion object {
         const val ADD_BUTTON_VISIBILITY_MARK = 4
+        const val HABIT_EXTRA_KEY = "habit_extra_key"
+        const val POSITION_KEY = "position_key"
+/*        const val DESCRIPTION_KEY = "description_key"
+        const val PERIOD_COUNT_KEY = "period_count_key"
+        const val PERIOD_DAYS_KEY = "period_days_key"
+        const val TYPE_KEY = "type_key"
+        const val PRIORITY_KEY = "priority_key"
+        const val COLOR_KEY = "color_key"
+        const val POSITION_KEY = "position_key"*/
     }
 }

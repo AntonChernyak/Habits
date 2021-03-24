@@ -1,19 +1,20 @@
 package ru.doubletapp.eduapp.habits.data.repository
 
 import android.graphics.Color
+import android.util.Log
 import ru.doubletapp.eduapp.habits.data.model.Habit
 import ru.doubletapp.eduapp.habits.data.model.HabitTypeEnum
 
 object MockRepository {
     val list: MutableList<Habit> by lazy {
-       createHabitsRepository()
+        createHabitsRepository()
     }
 
-    fun addHabit(habit:Habit){
-        list.add(habit)
+    fun addHabit(position: Int = list.size, habit: Habit) {
+        list.add(position, habit)
     }
 
-    private fun createHabitsRepository(): MutableList<Habit>{
+    private fun createHabitsRepository(): MutableList<Habit> {
         val initialList = mutableListOf<Habit>()
         Habit(
             title = "Погладить кота",
@@ -23,7 +24,7 @@ object MockRepository {
             color = Color.RED
         ).apply { initialList.add(this) }
 
-       Habit(
+        Habit(
             title = "Покормить кота",
             description = "Лучше кормить кота, а то он будет злиться. А до этого лучше не доводить, ибо страшен кот в гневе!",
             priority = "5",
@@ -59,7 +60,7 @@ object MockRepository {
         Habit(
             title = "Покормить кота",
             description = "Лучше кормить кота, а то он будет злиться. А до этого лучше не доводить, ибо страшен кот в гневе!",
-            priority = "5",
+            priority = "1",
             periodCount = "4",
             periodDays = "1",
             color = Color.MAGENTA

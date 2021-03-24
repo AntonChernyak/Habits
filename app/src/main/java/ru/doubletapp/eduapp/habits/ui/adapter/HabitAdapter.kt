@@ -9,7 +9,7 @@ import ru.doubletapp.eduapp.habits.data.model.Habit
 
 class HabitAdapter(
     private val checkClick: (View) -> Unit,
-    private val itemClick: (View) -> Unit
+    private val itemClick: (View, Int) -> Unit
 ): RecyclerView.Adapter<HabitViewHolder>() {
 
     var habitsList: List<Habit> = emptyList()
@@ -25,7 +25,7 @@ class HabitAdapter(
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         val habit = habitsList[position]
-        holder.itemView.setOnClickListener(itemClick)
+        holder.itemView.setOnClickListener { itemClick.invoke(holder.itemView, position)}
         holder.bind(habit, checkClick)
     }
 
