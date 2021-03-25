@@ -3,6 +3,7 @@ package ru.doubletapp.eduapp.habits.ui.activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -15,6 +16,7 @@ import ru.doubletapp.eduapp.habits.data.model.Habit
 import ru.doubletapp.eduapp.habits.data.model.HabitTypeEnum
 import ru.doubletapp.eduapp.habits.data.repository.MockRepository
 import ru.doubletapp.eduapp.habits.databinding.ActivityHabitCreatorBinding
+import ru.doubletapp.eduapp.habits.extension.getBackgroundColor
 import ru.doubletapp.eduapp.habits.extension.hideKeyboard
 import ru.doubletapp.eduapp.habits.ui.activity.HabitsListActivity.Companion.HABIT_EXTRA_KEY
 import ru.doubletapp.eduapp.habits.ui.colorpicker.ColorPickerBackgroundCreator
@@ -28,8 +30,7 @@ class HabitCreatorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_habit_creator)
         createHabitPrioritySpinner()
         setDataFromIntent()
-        binding.colorScrollView.colorPickerContainer.background = BitmapDrawable(resources,
-            ColorPickerBackgroundCreator.createBackgroundBitmap(this))
+        setColorPicker()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -41,6 +42,7 @@ class HabitCreatorActivity : AppCompatActivity() {
             putString(PERIOD_COUNT_KEY, binding.periodTimesEditText.text.toString())
             putString(PERIOD_DAYS_KEY, binding.periodDaysEditText.text.toString())
             putParcelable(TYPE_KEY, getHabitType())
+            putInt(COLOR_KEY, binding.selectedColorView.getBackgroundColor())
         }
     }
 
@@ -53,6 +55,8 @@ class HabitCreatorActivity : AppCompatActivity() {
         savedInstanceState.getString(PRIORITY_KEY)?.toInt()
             ?.minus(1)?.let { binding.prioritySpinner.setSelection(it) }
         savedInstanceState.getParcelable<HabitTypeEnum>(TYPE_KEY)?.let { setHabitType(it) }
+        binding.selectedColorView.backgroundTintList =
+            ColorStateList.valueOf(savedInstanceState.getInt(COLOR_KEY, Color.GRAY))
     }
 
     fun createHabitButtonClick(view: View) {
@@ -86,7 +90,7 @@ class HabitCreatorActivity : AppCompatActivity() {
             type = getHabitType(),
             periodCount = binding.periodTimesEditText.text.toString(),
             periodDays = binding.periodDaysEditText.text.toString(),
-            color = Color.parseColor("#EEEEEE")
+            color = binding.selectedColorView.getBackgroundColor()
         )
     }
 
@@ -96,7 +100,8 @@ class HabitCreatorActivity : AppCompatActivity() {
     }
 
     private fun fillInRequiredFields(view: View) {
-        Snackbar.make(view, getString(R.string.fill_in_required_fields), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(view, getString(R.string.fill_in_required_fields), Snackbar.LENGTH_LONG)
+            .show()
         if (binding.periodTimesEditText.text.isNullOrEmpty()) {
             binding.periodTimesEditText.backgroundTintList = ColorStateList.valueOf(Color.RED)
         } else {
@@ -119,7 +124,7 @@ class HabitCreatorActivity : AppCompatActivity() {
         }
     }
 
-    private fun allRequiredDataEntered(){
+    private fun allRequiredDataEntered() {
         binding.habitTitleEditText.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_color_green))
         binding.periodDaysEditText.backgroundTintList =
@@ -178,6 +183,27 @@ class HabitCreatorActivity : AppCompatActivity() {
             binding.periodTimesEditText.setText(editingHabit.periodCount)
             binding.prioritySpinner.setSelection(editingHabit.priority.toInt() - 1)
             setHabitType(editingHabit.type)
+            binding.selectedColorView.backgroundTintList = ColorStateList.valueOf(editingHabit.color)
+        }
+    }
+
+    private fun setColorPicker() {
+        binding.selectedColorView.setOnClickListener {
+            val scrollViewVisibility = binding.colorScrollView.scrollView.visibility
+            binding.colorScrollView.scrollView.visibility =
+                if (scrollViewVisibility == View.GONE) View.VISIBLE
+                else View.GONE
+        }
+
+        binding.colorScrollView.colorPickerContainer.background = BitmapDrawable(
+            resources,
+            ColorPickerBackgroundCreator.createBackgroundBitmap(this)
+        )
+
+        ColorPickerBackgroundCreator.createColorPickerItems(this) {
+            val color = it.backgroundTintList
+            binding.selectedColorView.backgroundTintList = color
+            binding.colorScrollView.scrollView.visibility = View.GONE
         }
     }
 
