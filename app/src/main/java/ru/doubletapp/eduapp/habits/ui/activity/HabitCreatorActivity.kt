@@ -2,6 +2,7 @@ package ru.doubletapp.eduapp.habits.ui.activity
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -27,8 +28,8 @@ class HabitCreatorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_habit_creator)
         createHabitPrioritySpinner()
         setDataFromIntent()
-        binding.colorScrollView.colorPickerContainer.background =
-            ColorPickerBackgroundCreator.getColorBackgroundDrawable(this)
+        binding.colorScrollView.colorPickerContainer.background = BitmapDrawable(resources,
+            ColorPickerBackgroundCreator.createBackgroundBitmap(this))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

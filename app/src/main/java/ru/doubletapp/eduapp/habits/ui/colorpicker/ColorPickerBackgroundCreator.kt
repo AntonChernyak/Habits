@@ -1,29 +1,20 @@
 package ru.doubletapp.eduapp.habits.ui.colorpicker
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
-import android.graphics.drawable.PaintDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RectShape
+import android.graphics.*
 import ru.doubletapp.eduapp.habits.R
+import kotlin.math.roundToInt
+
 
 object ColorPickerBackgroundCreator {
 
     private const val ITEM_COLOR_COUNT = 16
 
-    fun getColorBackgroundDrawable(context: Context): PaintDrawable {
-        val sFactory: ShapeDrawable.ShaderFactory = object : ShapeDrawable.ShaderFactory() {
-            override fun resize(width: Int, height: Int): Shader {
-                return getShader(context)
-            }
-        }
-
-        return PaintDrawable().apply {
-            shape = RectShape()
-            shaderFactory = sFactory
-        }
+    fun createBackgroundBitmap(context: Context): Bitmap? {
+        val bitmap = Bitmap.createBitmap(getWidth(context).roundToInt(), 1, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        canvas.drawRect(RectF(0f, 0f, getWidth(context), 1f), getBackgroundDrawable(context))
+        return bitmap
     }
 
     private fun buildHueColorArray(): IntArray {
@@ -38,19 +29,24 @@ object ColorPickerBackgroundCreator {
         return hue
     }
 
-    private fun getShader(context: Context): Shader{
-        val width = ITEM_COLOR_COUNT * context.resources.getDimension(R.dimen.item_color_picker_size) +
+    private fun getWidth(context: Context): Float{
+        return ITEM_COLOR_COUNT * context.resources.getDimension(R.dimen.item_color_picker_size) +
                 (ITEM_COLOR_COUNT * 2) * context.resources.getDimension(R.dimen.spacing_large_32)
+    }
 
-        return LinearGradient(
+    private fun getBackgroundDrawable(context: Context): Paint{
+        val gradient = LinearGradient(
             0f,
             0f,
-            width,
+            getWidth(context),
             0f,
             buildHueColorArray(),
             null,
-            Shader.TileMode.CLAMP
-        )
-    }
+            Shader.TileMode.CLAMP)
+        return Paint().apply {
+            isDither = true
+            shader = gradient
+        }
 
+    }
 }
