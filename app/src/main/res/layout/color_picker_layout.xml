@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:overScrollMode="never"
-    android:visibility="gone"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    android:visibility="gone">
 
     <LinearLayout
         android:id="@+id/color_picker_container"
@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="@dimen/spacing_very_tiny_2">
-
     </LinearLayout>
 
 </HorizontalScrollView>

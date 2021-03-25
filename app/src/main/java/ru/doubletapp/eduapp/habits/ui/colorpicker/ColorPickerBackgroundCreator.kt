@@ -4,19 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.*
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginStart
 import androidx.core.view.updateMargins
-import androidx.recyclerview.widget.LinearLayoutManager
 import ru.doubletapp.eduapp.habits.R
-import ru.doubletapp.eduapp.habits.databinding.ActivityHabitCreatorBinding
-import ru.doubletapp.eduapp.habits.extension.dpToPx
 import kotlin.math.roundToInt
-
 
 object ColorPickerBackgroundCreator {
 
@@ -59,7 +53,6 @@ object ColorPickerBackgroundCreator {
             isDither = true
             shader = gradient
         }
-
     }
 
     fun createColorPickerItems(context: Context, colorItemClick: (View) -> Unit){
@@ -72,12 +65,10 @@ object ColorPickerBackgroundCreator {
 
         val itemsContainer = (context as Activity).findViewById<LinearLayout>(R.id.color_picker_container)
 
-        for (item in 1..ITEM_COLOR_COUNT - 1) {
-
-            Log.d("TAGGGG", "$item [px] widt = ${bitmap?.width?.toFloat()?.let { context.dpToPx(it) }}, x = ${context.dpToPx((startPosition + item * step).toFloat())}")
-            Log.d("TAGGGG", "$item [dp] widt = ${bitmap?.width}, x = ${(startPosition + item * step).toFloat()}")
-
-            val pixel = bitmap?.getPixel((startPosition + item * step).roundToInt(), 0)
+        var acc = startPosition
+        for (item in 0 until ITEM_COLOR_COUNT) {
+            val pixel = bitmap?.getPixel(acc.roundToInt(), 0)
+            acc += step
 
             val colorItemView = View(context).apply {
                 layoutParams = ViewGroup.MarginLayoutParams(
