@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".ui.activity.HabitsListActivity">
+    tools:context=".ui.fragment.HabitsListFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/habitsListToolbar"
@@ -41,7 +41,6 @@
             android:layout_marginBottom="@dimen/spacing_medium_16"
             android:clickable="true"
             android:contentDescription="@string/add_habit"
-            android:onClick="addHabitButtonClick"
             app:backgroundTint="@color/primary_color_green"
             app:srcCompat="@drawable/ic_add_24_white"
             app:tint="@color/white" />

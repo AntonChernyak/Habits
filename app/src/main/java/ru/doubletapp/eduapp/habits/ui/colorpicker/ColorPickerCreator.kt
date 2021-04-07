@@ -12,14 +12,14 @@ import androidx.core.view.updateMargins
 import ru.doubletapp.eduapp.habits.R
 import kotlin.math.roundToInt
 
-object ColorPickerBackgroundCreator {
+object ColorPickerCreator {
 
     private const val ITEM_COLOR_COUNT = 16
 
     fun createBackgroundBitmap(context: Context): Bitmap? {
-        val bitmap = Bitmap.createBitmap(getWidth(context).roundToInt(), 1, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(getContainerWidth(context).roundToInt(), 1, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        canvas.drawRect(RectF(0f, 0f, getWidth(context), 1f), getBackgroundDrawable(context))
+        canvas.drawRect(RectF(0f, 0f, getContainerWidth(context), 1f), getBackgroundDrawable(context))
         return bitmap
     }
 
@@ -35,7 +35,7 @@ object ColorPickerBackgroundCreator {
         return hue
     }
 
-    private fun getWidth(context: Context): Float{
+    private fun getContainerWidth(context: Context): Float{
         return ITEM_COLOR_COUNT * context.resources.getDimension(R.dimen.item_color_picker_size) +
                 (ITEM_COLOR_COUNT * 2) * context.resources.getDimension(R.dimen.color_picker_item_space_size)
     }
@@ -44,7 +44,7 @@ object ColorPickerBackgroundCreator {
         val gradient = LinearGradient(
             0f,
             0f,
-            getWidth(context),
+            getContainerWidth(context),
             0f,
             buildHueColorArray(),
             null,

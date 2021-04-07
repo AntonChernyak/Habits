@@ -1,12 +1,14 @@
-package ru.doubletapp.eduapp.habits.ui.activity
+package ru.doubletapp.eduapp.habits.ui.fragment
 
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -14,22 +16,30 @@ import ru.doubletapp.eduapp.habits.R
 import ru.doubletapp.eduapp.habits.data.model.Habit
 import ru.doubletapp.eduapp.habits.data.model.HabitTypeEnum
 import ru.doubletapp.eduapp.habits.data.repository.MockRepository
-import ru.doubletapp.eduapp.habits.databinding.ActivityHabitCreatorBinding
-import ru.doubletapp.eduapp.habits.extension.getBackgroundColor
 import ru.doubletapp.eduapp.habits.extension.hideKeyboard
-import ru.doubletapp.eduapp.habits.ui.activity.HabitsListActivity.Companion.HABIT_EXTRA_KEY
-import ru.doubletapp.eduapp.habits.ui.colorpicker.ColorPickerBackgroundCreator
+import ru.doubletapp.eduapp.habits.ui.colorpicker.ColorPickerCreator
+import ru.doubletapp.eduapp.habits.databinding.FragmentHabitCreatorBinding
+import ru.doubletapp.eduapp.habits.extension.getBackgroundColor
+import ru.doubletapp.eduapp.habits.ui.fragment.HabitsListFragment.Companion.HABIT_EXTRA_KEY
 
-class HabitCreatorActivity : AppCompatActivity() {
+class HabitCreatorFragment : Fragment() {
 
-    private val binding: ActivityHabitCreatorBinding by viewBinding()
+    private val binding: FragmentHabitCreatorBinding by viewBinding()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_habit_creator)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_habit_creator, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         createHabitPrioritySpinner()
         setDataFromIntent()
         setColorPicker()
+        binding.createHabitButton.setOnClickListener { createHabitButtonClick() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -45,40 +55,42 @@ class HabitCreatorActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        binding.habitTitleEditText.setText(savedInstanceState.getString(TITLE_KEY))
-        binding.habitDescriptionEditText.setText(savedInstanceState.getString(DESCRIPTION_KEY))
-        binding.periodDaysEditText.setText(savedInstanceState.getString(PERIOD_DAYS_KEY))
-        binding.periodTimesEditText.setText(savedInstanceState.getString(PERIOD_COUNT_KEY))
-        savedInstanceState.getString(PRIORITY_KEY)?.toInt()
-            ?.minus(1)?.let { binding.prioritySpinner.setSelection(it) }
-        savedInstanceState.getParcelable<HabitTypeEnum>(TYPE_KEY)?.let { setHabitType(it) }
-        binding.selectedColorView.backgroundTintList =
-            ColorStateList.valueOf(savedInstanceState.getInt(COLOR_KEY, Color.GRAY))
-    }
+/*
+        override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+            super.onRestoreInstanceState(savedInstanceState)
+            binding.habitTitleEditText.setText(savedInstanceState.getString(TITLE_KEY))
+            binding.habitDescriptionEditText.setText(savedInstanceState.getString(DESCRIPTION_KEY))
+            binding.periodDaysEditText.setText(savedInstanceState.getString(PERIOD_DAYS_KEY))
+            binding.periodTimesEditText.setText(savedInstanceState.getString(PERIOD_COUNT_KEY))
+            savedInstanceState.getString(PRIORITY_KEY)?.toInt()
+                ?.minus(1)?.let { binding.prioritySpinner.setSelection(it) }
+            savedInstanceState.getParcelable<HabitTypeEnum>(TYPE_KEY)?.let { setHabitType(it) }
+            binding.selectedColorView.backgroundTintList =
+                ColorStateList.valueOf(savedInstanceState.getInt(COLOR_KEY, Color.GRAY))
+        }
+*/
 
-    fun createHabitButtonClick(view: View) {
+    private fun createHabitButtonClick() {
         if (binding.habitTitleEditText.text.isNullOrEmpty() ||
             binding.periodDaysEditText.text.isNullOrEmpty() ||
             binding.periodTimesEditText.text.isNullOrEmpty()
         ) {
-            fillInRequiredFields(view)
+            fillInRequiredFields()
         } else {
             allRequiredDataEntered()
-            val position = intent.getIntExtra(POSITION_KEY, DEFAULT_POSITION)
+            val position = requireActivity().intent.getIntExtra(POSITION_KEY, DEFAULT_POSITION)
             val habit = createHabit()
 
             if (position == DEFAULT_POSITION) {
                 MockRepository.addHabit(habit = habit)
-                showCreateSnackbar(view)
+                showCreateSnackbar()
             } else {
                 replaceHabit(habit, position)
-                showEditSnackBar(view, position)
+                showEditSnackBar(position)
             }
         }
 
-        this.hideKeyboard()
+        requireActivity().hideKeyboard()
     }
 
     private fun createHabit(): Habit {
@@ -98,38 +110,68 @@ class HabitCreatorActivity : AppCompatActivity() {
         MockRepository.addHabit(position, habit)
     }
 
-    private fun fillInRequiredFields(view: View) {
-        Snackbar.make(view, getString(R.string.fill_in_required_fields), Snackbar.LENGTH_LONG)
+    private fun fillInRequiredFields() {
+        Snackbar.make(binding.root, getString(R.string.fill_in_required_fields), Snackbar.LENGTH_LONG)
             .show()
         if (binding.periodTimesEditText.text.isNullOrEmpty()) {
             binding.periodTimesEditText.backgroundTintList = ColorStateList.valueOf(Color.RED)
         } else {
             binding.periodTimesEditText.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_color_green))
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        R.color.primary_color_green
+                    )
+                )
         }
 
         if (binding.periodDaysEditText.text.isNullOrEmpty()) {
             binding.periodDaysEditText.backgroundTintList = ColorStateList.valueOf(Color.RED)
         } else {
             binding.periodDaysEditText.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_color_green))
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        R.color.primary_color_green
+                    )
+                )
         }
 
         if (binding.habitTitleEditText.text.isNullOrEmpty()) {
             binding.habitTitleEditText.backgroundTintList = ColorStateList.valueOf(Color.RED)
         } else {
             binding.habitTitleEditText.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_color_green))
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        R.color.primary_color_green
+                    )
+                )
         }
     }
 
     private fun allRequiredDataEntered() {
         binding.habitTitleEditText.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_color_green))
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.primary_color_green
+                )
+            )
         binding.periodDaysEditText.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_color_green))
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.primary_color_green
+                )
+            )
         binding.periodTimesEditText.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_color_green))
+            ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.primary_color_green
+                )
+            )
     }
 
     private fun getHabitType(): HabitTypeEnum {
@@ -145,7 +187,7 @@ class HabitCreatorActivity : AppCompatActivity() {
 
     private fun createHabitPrioritySpinner() {
         val spinnerAdapter = ArrayAdapter.createFromResource(
-            this,
+            requireActivity(),
             R.array.prioritySpinnerDataArray,
             android.R.layout.simple_spinner_item
         )
@@ -153,28 +195,39 @@ class HabitCreatorActivity : AppCompatActivity() {
         binding.prioritySpinner.adapter = spinnerAdapter
     }
 
-    private fun showCreateSnackbar(view: View) {
-        Snackbar.make(view, getString(R.string.habit_added), Snackbar.LENGTH_LONG)
+    private fun showCreateSnackbar() {
+        Snackbar.make(binding.root, getString(R.string.habit_added), Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.cancel)) {
                 MockRepository.list.removeLast()
             }
-            .setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color))
+            .setActionTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.snackbar_action_color
+                )
+            )
             .show()
     }
 
-    private fun showEditSnackBar(view: View, position: Int) {
-        Snackbar.make(view, getString(R.string.habit_edited), Snackbar.LENGTH_LONG)
+    private fun showEditSnackBar(position: Int) {
+        Snackbar.make(binding.root, getString(R.string.habit_edited), Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.cancel)) {
                 setDataFromIntent()
-                val editingHabit = intent.getParcelableExtra<Habit>(HABIT_EXTRA_KEY)
+                val editingHabit =
+                    requireActivity().intent.getParcelableExtra<Habit>(HABIT_EXTRA_KEY)
                 editingHabit?.let { habit -> replaceHabit(habit, position) }
             }
-            .setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color))
+            .setActionTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.snackbar_action_color
+                )
+            )
             .show()
     }
 
     private fun setDataFromIntent() {
-        val editingHabit = intent.getParcelableExtra<Habit>(HABIT_EXTRA_KEY)
+        val editingHabit = requireActivity().intent.getParcelableExtra<Habit>(HABIT_EXTRA_KEY)
         if (editingHabit != null) {
             binding.habitTitleEditText.setText(editingHabit.title)
             binding.habitDescriptionEditText.setText(editingHabit.description)
@@ -182,27 +235,28 @@ class HabitCreatorActivity : AppCompatActivity() {
             binding.periodTimesEditText.setText(editingHabit.periodCount)
             binding.prioritySpinner.setSelection(editingHabit.priority.toInt() - 1)
             setHabitType(editingHabit.type)
-            binding.selectedColorView.backgroundTintList = ColorStateList.valueOf(editingHabit.color)
+            binding.selectedColorView.backgroundTintList =
+                ColorStateList.valueOf(editingHabit.color)
         }
     }
 
     private fun setColorPicker() {
         binding.selectedColorView.setOnClickListener {
-            val scrollViewVisibility = binding.colorScrollView.scrollView.visibility
-            binding.colorScrollView.scrollView.visibility =
+            val scrollViewVisibility = binding.colorScrollView.colorPickerScrollView.visibility
+            binding.colorScrollView.colorPickerScrollView.visibility =
                 if (scrollViewVisibility == View.GONE) View.VISIBLE
                 else View.GONE
         }
 
         binding.colorScrollView.colorPickerContainer.background = BitmapDrawable(
             resources,
-            ColorPickerBackgroundCreator.createBackgroundBitmap(this)
+            ColorPickerCreator.createBackgroundBitmap(requireActivity())
         )
 
-        ColorPickerBackgroundCreator.createColorPickerItems(this) {
+        ColorPickerCreator.createColorPickerItems(requireActivity()) {
             val color = it.backgroundTintList
             binding.selectedColorView.backgroundTintList = color
-            binding.colorScrollView.scrollView.visibility = View.GONE
+            binding.colorScrollView.colorPickerScrollView.visibility = View.GONE
         }
     }
 
