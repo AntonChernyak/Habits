@@ -24,5 +24,6 @@
     <dimen name="item_color_picker_size">40dp</dimen>
     <dimen name="color_picker_item_space_size">32dp</dimen>
     <dimen name="item_color_corner_radius">10dp</dimen>
+    <dimen name="logo_size">200dp</dimen>
 
 </resources>

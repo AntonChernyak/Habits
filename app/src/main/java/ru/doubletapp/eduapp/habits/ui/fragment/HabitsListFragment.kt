@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import ru.doubletapp.eduapp.habits.R
 import ru.doubletapp.eduapp.habits.databinding.FragmentHabitsListBinding
 import android.content.Intent
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -21,9 +22,8 @@ class HabitsListFragment : Fragment() {
     private val habitItems: List<Habit> by lazy {
         MockRepository.list
     }
-    private val linearLayoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-    }
+    lateinit var layoutManager: LinearLayoutManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,23 +34,21 @@ class HabitsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // requireActivity().setSupportActionBar(binding.habitsListToolbar)
-        createAddButtonVisibilityMode()
-        binding.addFabButton.setOnClickListener { addHabitButtonClick() }
-    }
-
-    override fun onResume() {
-        super.onResume()
         showData()
+        createAddButtonVisibilityMode()
+        addHabitButtonClick()
     }
 
-    fun addHabitButtonClick() {
-        val intent = Intent(requireActivity(), HabitCreatorFragment::class.java)
-        startActivity(intent)
+    private fun addHabitButtonClick() {
+        binding.addFabButton.setOnClickListener { view: View ->
+            view.findNavController()
+                .navigate(R.id.action_habitsListFragment_to_habitCreatorFragment, null)
+        }
     }
 
     private fun showData() {
-        binding.habitsRecyclerView.layoutManager = linearLayoutManager
+        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        binding.habitsRecyclerView.layoutManager = layoutManager
         val adapter = HabitAdapter(
             { checkView ->
                 checkView.isSelected = !checkView.isSelected
@@ -63,11 +61,11 @@ class HabitsListFragment : Fragment() {
         binding.habitsRecyclerView.adapter = adapter
     }
 
-    private fun createAddButtonVisibilityMode(){
+    private fun createAddButtonVisibilityMode() {
         binding.habitsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val lastPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition()
-                if (habitItems.size > ADD_BUTTON_VISIBILITY_MARK && lastPosition == habitItems.size-1) {
+                val lastPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                if (habitItems.size > ADD_BUTTON_VISIBILITY_MARK && lastPosition == habitItems.size - 1) {
                     binding.addFabButton.visibility = View.GONE
                 } else binding.addFabButton.visibility = View.VISIBLE
             }

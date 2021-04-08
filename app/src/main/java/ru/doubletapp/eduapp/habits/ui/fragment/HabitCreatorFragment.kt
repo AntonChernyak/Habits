@@ -16,9 +16,9 @@ import ru.doubletapp.eduapp.habits.R
 import ru.doubletapp.eduapp.habits.data.model.Habit
 import ru.doubletapp.eduapp.habits.data.model.HabitTypeEnum
 import ru.doubletapp.eduapp.habits.data.repository.MockRepository
+import ru.doubletapp.eduapp.habits.databinding.FragmentHabitCreatorBinding
 import ru.doubletapp.eduapp.habits.extension.hideKeyboard
 import ru.doubletapp.eduapp.habits.ui.colorpicker.ColorPickerCreator
-import ru.doubletapp.eduapp.habits.databinding.FragmentHabitCreatorBinding
 import ru.doubletapp.eduapp.habits.extension.getBackgroundColor
 import ru.doubletapp.eduapp.habits.ui.fragment.HabitsListFragment.Companion.HABIT_EXTRA_KEY
 
