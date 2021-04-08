@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import ru.doubletapp.eduapp.habits.R
@@ -26,7 +28,6 @@ class HabitCreatorFragment : Fragment() {
 
     private val binding: FragmentHabitCreatorBinding by viewBinding()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +41,7 @@ class HabitCreatorFragment : Fragment() {
         setDataFromIntent()
         setColorPicker()
         binding.createHabitButton.setOnClickListener { createHabitButtonClick() }
+        addToggleToNavigationDrawer()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -258,6 +260,15 @@ class HabitCreatorFragment : Fragment() {
             binding.selectedColorView.backgroundTintList = color
             binding.colorScrollView.colorPickerScrollView.visibility = View.GONE
         }
+    }
+
+    private fun addToggleToNavigationDrawer(){
+        val drawer = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+        val toggle = ActionBarDrawerToggle(
+            requireActivity(), drawer, binding.habitsCreatorToolbar,
+            R.string.navigation_open, R.string.navigation_close)
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     companion object {

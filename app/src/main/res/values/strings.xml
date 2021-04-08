@@ -26,8 +26,12 @@
     <string name="app_developer">Разработчик</string>
     <string name="developer_name_value">Черняк А.О.</string>
     <string name="app_version_value">alpha_0.1</string>
-    <string name="app_title_value">Заметки</string>
+    <string name="app_title_value">Мои привычки</string>
     <string name="logo">Логотип</string>
+    <string name="habits_list">Список привычек</string>
+    <string name="application_info">Информация о приложении</string>
+    <string name="navigation_open">open</string>
+    <string name="navigation_close">close</string>
 
     <!-- priority spinner data -->
     <string-array name="prioritySpinnerDataArray">

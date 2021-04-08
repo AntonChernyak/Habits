@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import ru.doubletapp.eduapp.habits.R
 import ru.doubletapp.eduapp.habits.databinding.FragmentHabitsListBinding
 import android.content.Intent
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +39,7 @@ class HabitsListFragment : Fragment() {
         showData()
         createAddButtonVisibilityMode()
         addHabitButtonClick()
+        addToggleToNavigationDrawer()
     }
 
     private fun addHabitButtonClick() {
@@ -79,6 +82,15 @@ class HabitsListFragment : Fragment() {
             putExtra(POSITION_KEY, position)
         }
         startActivity(intent)
+    }
+
+    private fun addToggleToNavigationDrawer(){
+        val drawer = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+        val toggle = ActionBarDrawerToggle(
+            requireActivity(), drawer, binding.habitsListToolbar,
+            R.string.navigation_open, R.string.navigation_close)
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     companion object {
