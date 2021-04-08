@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.ViewPagerContainerFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/habitsListToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/my_habits" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/habit_creator_divider_color"
+        android:elevation="1dp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/streams_tab_layout"
+        style="@style/TabLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="78dp" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/streams_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        tools:background="@color/purple_500" />
+
+</LinearLayout>

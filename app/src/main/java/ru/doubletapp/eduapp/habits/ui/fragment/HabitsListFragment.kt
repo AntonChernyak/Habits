@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import ru.doubletapp.eduapp.habits.R
 import ru.doubletapp.eduapp.habits.databinding.FragmentHabitsListBinding
-import android.content.Intent
-import android.util.Log
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -20,11 +18,12 @@ import ru.doubletapp.eduapp.habits.data.model.Habit
 import ru.doubletapp.eduapp.habits.data.repository.MockRepository
 import ru.doubletapp.eduapp.habits.ui.adapter.HabitAdapter
 
-class HabitsListFragment : Fragment() {
+class HabitsListFragment(showItems: List<Habit>) : Fragment() {
 
     private val binding: FragmentHabitsListBinding by viewBinding()
     private val habitItems: List<Habit> by lazy {
-        MockRepository.list
+       // MockRepository.list
+        showItems
     }
     lateinit var layoutManager: LinearLayoutManager
 

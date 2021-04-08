@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,9 +43,6 @@ class HabitCreatorFragment : Fragment() {
         binding.createHabitButton.setOnClickListener { createHabitButtonClick() }
         addToggleToNavigationDrawer()
         savedInstanceState?.let { onRestoreInstanceState(it) }
-
-        Log.d("TAGGGG", "2 ${requireArguments().getParcelable<Habit>(HabitsListFragment.HABIT_EXTRA_KEY)}")
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
