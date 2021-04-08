@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,10 @@ class HabitCreatorFragment : Fragment() {
         setColorPicker()
         binding.createHabitButton.setOnClickListener { createHabitButtonClick() }
         addToggleToNavigationDrawer()
+        savedInstanceState?.let { onRestoreInstanceState(it) }
+
+        Log.d("TAGGGG", "2 ${requireArguments().getParcelable<Habit>(HabitsListFragment.HABIT_EXTRA_KEY)}")
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -57,20 +62,17 @@ class HabitCreatorFragment : Fragment() {
         }
     }
 
-/*
-        override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-            super.onRestoreInstanceState(savedInstanceState)
-            binding.habitTitleEditText.setText(savedInstanceState.getString(TITLE_KEY))
-            binding.habitDescriptionEditText.setText(savedInstanceState.getString(DESCRIPTION_KEY))
-            binding.periodDaysEditText.setText(savedInstanceState.getString(PERIOD_DAYS_KEY))
-            binding.periodTimesEditText.setText(savedInstanceState.getString(PERIOD_COUNT_KEY))
-            savedInstanceState.getString(PRIORITY_KEY)?.toInt()
-                ?.minus(1)?.let { binding.prioritySpinner.setSelection(it) }
-            savedInstanceState.getParcelable<HabitTypeEnum>(TYPE_KEY)?.let { setHabitType(it) }
-            binding.selectedColorView.backgroundTintList =
-                ColorStateList.valueOf(savedInstanceState.getInt(COLOR_KEY, Color.GRAY))
-        }
-*/
+    private fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        binding.habitTitleEditText.setText(savedInstanceState.getString(TITLE_KEY))
+        binding.habitDescriptionEditText.setText(savedInstanceState.getString(DESCRIPTION_KEY))
+        binding.periodDaysEditText.setText(savedInstanceState.getString(PERIOD_DAYS_KEY))
+        binding.periodTimesEditText.setText(savedInstanceState.getString(PERIOD_COUNT_KEY))
+        savedInstanceState.getString(PRIORITY_KEY)?.toInt()
+            ?.minus(1)?.let { binding.prioritySpinner.setSelection(it) }
+        savedInstanceState.getParcelable<HabitTypeEnum>(TYPE_KEY)?.let { setHabitType(it) }
+        binding.selectedColorView.backgroundTintList =
+            ColorStateList.valueOf(savedInstanceState.getInt(COLOR_KEY, Color.GRAY))
+    }
 
     private fun createHabitButtonClick() {
         if (binding.habitTitleEditText.text.isNullOrEmpty() ||
@@ -80,7 +82,7 @@ class HabitCreatorFragment : Fragment() {
             fillInRequiredFields()
         } else {
             allRequiredDataEntered()
-            val position = requireActivity().intent.getIntExtra(POSITION_KEY, DEFAULT_POSITION)
+            val position = requireArguments().getInt(POSITION_KEY, DEFAULT_POSITION)
             val habit = createHabit()
 
             if (position == DEFAULT_POSITION) {
@@ -113,7 +115,11 @@ class HabitCreatorFragment : Fragment() {
     }
 
     private fun fillInRequiredFields() {
-        Snackbar.make(binding.root, getString(R.string.fill_in_required_fields), Snackbar.LENGTH_LONG)
+        Snackbar.make(
+            binding.root,
+            getString(R.string.fill_in_required_fields),
+            Snackbar.LENGTH_LONG
+        )
             .show()
         if (binding.periodTimesEditText.text.isNullOrEmpty()) {
             binding.periodTimesEditText.backgroundTintList = ColorStateList.valueOf(Color.RED)
@@ -216,7 +222,7 @@ class HabitCreatorFragment : Fragment() {
             .setAction(getString(R.string.cancel)) {
                 setDataFromIntent()
                 val editingHabit =
-                    requireActivity().intent.getParcelableExtra<Habit>(HABIT_EXTRA_KEY)
+                    requireArguments().getParcelable<Habit>(HABIT_EXTRA_KEY)
                 editingHabit?.let { habit -> replaceHabit(habit, position) }
             }
             .setActionTextColor(
@@ -229,7 +235,7 @@ class HabitCreatorFragment : Fragment() {
     }
 
     private fun setDataFromIntent() {
-        val editingHabit = requireActivity().intent.getParcelableExtra<Habit>(HABIT_EXTRA_KEY)
+        val editingHabit = requireArguments().getParcelable<Habit>(HABIT_EXTRA_KEY)
         if (editingHabit != null) {
             binding.habitTitleEditText.setText(editingHabit.title)
             binding.habitDescriptionEditText.setText(editingHabit.description)
@@ -262,11 +268,12 @@ class HabitCreatorFragment : Fragment() {
         }
     }
 
-    private fun addToggleToNavigationDrawer(){
+    private fun addToggleToNavigationDrawer() {
         val drawer = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
             requireActivity(), drawer, binding.habitsCreatorToolbar,
-            R.string.navigation_open, R.string.navigation_close)
+            R.string.navigation_open, R.string.navigation_close
+        )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
     }

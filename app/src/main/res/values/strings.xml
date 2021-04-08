@@ -13,7 +13,7 @@
     <string name="times">раз</string>
     <string name="days">дней</string>
     <string name="choose_color">Выбрать цвет</string>
-    <string name="create">Создать</string>
+    <string name="save">Сохранить</string>
     <string name="period_string">%1$s раз в %2$s дней</string>
     <string name="my_habits">Мои привычки</string>
     <string name="habit_added">Привычка добавлена</string>

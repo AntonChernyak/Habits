@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import ru.doubletapp.eduapp.habits.R
 import ru.doubletapp.eduapp.habits.databinding.FragmentHabitsListBinding
 import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -36,10 +38,14 @@ class HabitsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showData()
         createAddButtonVisibilityMode()
         addHabitButtonClick()
         addToggleToNavigationDrawer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showData()
     }
 
     private fun addHabitButtonClick() {
@@ -77,11 +83,11 @@ class HabitsListFragment : Fragment() {
     }
 
     private fun openHabitForEditing(position: Int) {
-        val intent = Intent(requireActivity(), HabitCreatorFragment::class.java).apply {
-            putExtra(HABIT_EXTRA_KEY, habitItems[position])
-            putExtra(POSITION_KEY, position)
+        val bundle = Bundle().apply {
+            putParcelable(HABIT_EXTRA_KEY, habitItems[position])
+            putInt(POSITION_KEY, position)
         }
-        startActivity(intent)
+        findNavController().navigate(R.id.action_habitsListFragment_to_habitCreatorFragment, bundle)
     }
 
     private fun addToggleToNavigationDrawer(){
