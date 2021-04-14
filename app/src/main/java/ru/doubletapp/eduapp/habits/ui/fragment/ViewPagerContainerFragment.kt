@@ -25,7 +25,7 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.streamsViewPager.apply {
+        binding.habitsViewPager.apply {
             adapter = HabitViewPagerAdapter(this@ViewPagerContainerFragment)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             val child = getChildAt(0)
@@ -34,7 +34,7 @@ class ViewPagerContainerFragment : Fragment() {
             }
         }
 
-        TabLayoutMediator(binding.streamsTabLayout, binding.streamsViewPager) { tab, position ->
+        TabLayoutMediator(binding.habitsTabLayout, binding.habitsViewPager) { tab, position ->
             when (position) {
                 POSITIVE_TAB_POSITION -> tab.text = getString(R.string.goods)
                 NEGATIVE_TAB_POSITION -> tab.text = getString(R.string.bads)

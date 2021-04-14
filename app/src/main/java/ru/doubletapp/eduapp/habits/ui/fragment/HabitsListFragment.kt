@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.doubletapp.eduapp.habits.R
-import ru.doubletapp.eduapp.habits.databinding.FragmentHabitsListBinding
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -15,18 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.doubletapp.eduapp.habits.data.model.Habit
-import ru.doubletapp.eduapp.habits.data.repository.MockRepository
+import ru.doubletapp.eduapp.habits.databinding.FragmentHabitsListBinding
 import ru.doubletapp.eduapp.habits.ui.adapter.HabitAdapter
 
-class HabitsListFragment(showItems: List<Habit>) : Fragment() {
+class HabitsListFragment : Fragment() {
 
     private val binding: FragmentHabitsListBinding by viewBinding()
-    private val habitItems: List<Habit> by lazy {
-       // MockRepository.list
-        showItems
-    }
+    lateinit var habitItems: List<Habit>
     lateinit var layoutManager: LinearLayoutManager
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +35,7 @@ class HabitsListFragment(showItems: List<Habit>) : Fragment() {
         createAddButtonVisibilityMode()
         addHabitButtonClick()
         addToggleToNavigationDrawer()
+        habitItems = requireArguments().getParcelableArrayList(ITEMS_LIST_EXTRA) ?: ArrayList()
     }
 
     override fun onResume() {
@@ -50,7 +46,7 @@ class HabitsListFragment(showItems: List<Habit>) : Fragment() {
     private fun addHabitButtonClick() {
         binding.addFabButton.setOnClickListener { view: View ->
             view.findNavController()
-                .navigate(R.id.action_habitsListFragment_to_habitCreatorFragment, null)
+                .navigate(R.id.action_viewPagerContainerFragment_to_habitCreatorFragment, null)
         }
     }
 
@@ -86,14 +82,15 @@ class HabitsListFragment(showItems: List<Habit>) : Fragment() {
             putParcelable(HABIT_EXTRA_KEY, habitItems[position])
             putInt(POSITION_KEY, position)
         }
-        findNavController().navigate(R.id.action_habitsListFragment_to_habitCreatorFragment, bundle)
+        findNavController().navigate(R.id.action_viewPagerContainerFragment_to_habitCreatorFragment, bundle)
     }
 
-    private fun addToggleToNavigationDrawer(){
+    private fun addToggleToNavigationDrawer() {
         val drawer = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
-            requireActivity(), drawer, binding.habitsListToolbar,
-            R.string.navigation_open, R.string.navigation_close)
+            requireActivity(), drawer, requireActivity().findViewById(R.id.habitsListToolbar),
+            R.string.navigation_open, R.string.navigation_close
+        )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
     }
@@ -102,5 +99,13 @@ class HabitsListFragment(showItems: List<Habit>) : Fragment() {
         const val ADD_BUTTON_VISIBILITY_MARK = 4
         const val HABIT_EXTRA_KEY = "habit_extra_key"
         const val POSITION_KEY = "position_key"
+        const val ITEMS_LIST_EXTRA = "items_list_extra"
+
+        fun newInstance(items: ArrayList<Habit>): HabitsListFragment =
+            HabitsListFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelableArrayList(ITEMS_LIST_EXTRA, items)
+                }
+            }
     }
 }

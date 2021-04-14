@@ -13,13 +13,18 @@ class HabitViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) 
         MockRepository.list.filter { it.type == HabitTypeEnum.GOOD_HABIT }
     }
 
+    private val negativeHabits: List<Habit> by lazy {
+        MockRepository.list.filter { it.type == HabitTypeEnum.BAD_HABIT }
+    }
+
     override fun getItemCount(): Int = TAB_COUNT
 
     override fun createFragment(position: Int): Fragment {
+        val arrayList = ArrayList<Habit>()
         return when (position) {
-            POSITIVE_FRAGMENT_POSITION -> HabitsListFragment()
-            NEGATIVE_FRAGMENT_POSITION -> HabitsListFragment()
-            else -> HabitsListFragment(emptyList())
+            POSITIVE_FRAGMENT_POSITION -> HabitsListFragment.newInstance(arrayList.apply { addAll(positiveHabits) })
+            NEGATIVE_FRAGMENT_POSITION -> HabitsListFragment.newInstance(arrayList.apply { addAll(negativeHabits) })
+            else -> HabitsListFragment.newInstance(ArrayList())
         }
     }
 

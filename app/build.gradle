@@ -64,4 +64,7 @@ dependencies {
 
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:2.3.5"
+
+    // ViewPager
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }
